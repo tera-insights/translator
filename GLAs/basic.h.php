@@ -126,10 +126,14 @@ function UserDefined(array $t_args, array $inputs, array $outputs)
         $fields    = str_replace($replace, $type, $fields);
     }
 
+    // Escape characters inside the code blocks are processed here.
+    foreach ($functions as &$function)
+        $function = stripcslashes($function);
+
     $constructor = $functions[0];
-    $AddItem = $functions[1];
-    $AddState = $functions[2];
-    $GetResult = $functions[3];
+    $AddItem     = $functions[1];
+    $AddState    = $functions[2];
+    $GetResult   = $functions[3];
 
     // The result statement for JSONs is now produced.
     if ($return == "json") {
@@ -150,9 +154,9 @@ function UserDefined(array $t_args, array $inputs, array $outputs)
     }
 
     // Basic return values.
-    $sys_headers = array_merge($t_args['sys.headers'], ['armadillo']);
+    $sys_headers  = array_merge($t_args['sys.headers'], ['armadillo']);
     $user_headers = $t_args['user.headers'];
-    $lib_headers = array_merge($t_args['lib.headers'], ['statistics/ArmaJson']);
+    $lib_headers  = array_merge($t_args['lib.headers'], ['ArmaJson.h']);
 ?>
 
 <?  foreach ($typedefs as $counter => $type) { ?>
